@@ -1,6 +1,15 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Register = () => {
+
+  const navigate = useNavigate()
+
+  const handleRegister = async()=>{
+    navigate('/home')
+  }
+
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
         <form className="bg-white shadow-lg rounded-2xl w-full max-w-md p-8 space-y-6">
@@ -70,6 +79,7 @@ const Register = () => {
 
         <button
           type="submit"
+          onClick={()=>handleRegister()}
           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md transition duration-300"
         >
           R E G I S T E R 

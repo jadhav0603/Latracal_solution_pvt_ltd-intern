@@ -1,6 +1,14 @@
-import React from 'react';
+import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+
 
 const Login = () => {
+
+  const [email,setEmail] = useState("")
+  const [pass,setPass] = useState("")
+
+  const navigate = useNavigate()
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <form className="bg-white shadow-lg rounded-2xl w-full max-w-md p-8 space-y-6">
@@ -15,6 +23,8 @@ const Login = () => {
           <input
             type="email"
             placeholder="you@example.com"
+            value={email}
+            onChange={(e)=>setEmail(e.target.value)}
             className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
@@ -27,6 +37,8 @@ const Login = () => {
           <input
             type="password"
             placeholder="Password"
+            value={pass}
+            onChange={(e)=>setPass(e.target.value)}
             className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
@@ -39,17 +51,20 @@ const Login = () => {
         </div>
 
         <button
-         className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md transition duration-300"
-           type="submit"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md transition duration-300"
+          type="submit"
         >
           Log In
         </button>
 
         <p className="text-sm text-center text-gray-600">
           Don’t have an account?
-          <a href="#" className="ml-1 text-blue-600 font-medium hover:underline">
+          <span
+            onClick={()=>navigate('/register')}
+            className="ml-1 text-blue-600 font-medium hover:underline"
+          >
             Register Now
-          </a>
+          </span>
         </p>
       </form>
     </div>
