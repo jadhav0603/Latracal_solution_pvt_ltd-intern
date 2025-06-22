@@ -7,14 +7,16 @@ require('dotenv').config()
 const PORT = process.env.PORT
 
 
-const UserRoutes = require('./Routes/user.routes')
+const userRoutes = require('./Routes/user.routes')
+const bookRoutes = require('./Routes/book.Routes')
 
 
 app.use(express.json())
 app.use(cors())
 
 
-app.use('/',UserRoutes)
+app.use('/users',userRoutes)
+app.use('/books', bookRoutes)
 
 
 app.listen(PORT,()=>{

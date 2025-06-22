@@ -8,6 +8,7 @@ const user = require('../Models/userModel')
 
 
 router.post('/register',async(req,res)=>{
+    // console.log(req.body)
     const{firstName, lastName,email,password} =req.body
     try {
         const existedUser = await user.findOne({email})
@@ -20,22 +21,23 @@ router.post('/register',async(req,res)=>{
         const newUser = new user({firstName,lastName,email,password:hashPass})
         await newUser.save()
 
-        return res.status(200).json({status: "success" ,message: 'user registered successfully'})
+        return res.status(201).json({status: "success" ,message: 'user registered successfully'})
 
 
     } catch (error) {
-        return res.status(500).json({register_error: error})
+        return res.status(500).json({register_error: error.message})
     }
 })
 
 
 
 router.post('/login', async(req,res)=>{
+    console.log(req.body)
     const {email, password} = req.body
     try {
         const userExist = await user.findOne({email})
         if(!userExist){
-            return res.status(404).json({message:'user not registered'})
+            return res.status(404).json({message:'Invalid Email id and password'})
         }
 
         const pass = await bcrypt.compare(password, userExist.password)
@@ -50,6 +52,23 @@ router.post('/login', async(req,res)=>{
 
     } catch (error) {
         return res.status(500).json({Login_error : error})
+    }
+})
+
+
+
+router.get('/info', async(req,res)=>{
+    const {_id} = req.query
+    try{
+        const userinfo = await user.findOne({_id})
+        if(!userinfo){
+            return res.status(404).json({message:"User Not Found"})
+        }
+
+        return res.status(200).json(userinfo)
+    }
+    catch(error){
+        return res.status(500).json({userInfo : error.message})
     }
 })
 
